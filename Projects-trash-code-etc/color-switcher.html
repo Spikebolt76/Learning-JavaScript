@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Scheme Switcher</title>
+
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        body {
+            height: 100vh;
+            font-family: Verdana, Tahoma, sans-serif;
+            font-size: 1.5rem;
+        }
+
+        .title {
+            margin: 40px;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .box-container {
+            display: flex;
+            justify-content: space-between;
+            width: 65%;
+        }
+
+        .about {
+            margin: 30px;
+        }
+
+        .box {
+            border: 5px solid black;
+            border-radius: 4px;
+            height: 200px;
+            width: 200px;
+            display: inline-block;
+        }
+
+        .inner {
+            margin: 5px;
+            height: 190px;
+            width: 190px;
+        }
+
+        .box:nth-child(1) .inner {
+            background-color: #ff6347;
+        }
+
+        .box:nth-child(2) .inner {
+            background-color: #90ee90;
+        }
+
+        .box:nth-child(3) .inner {
+            background-color: #f5deb3;
+        }
+
+        .box:nth-child(4) .inner {
+            background-color: #87ceeb;
+        }
+
+        .emoticon {
+            display: inline-block;
+            animation: mcFloat 1.6s ease-in-out infinite;
+        }
+
+        .title {
+            margin: 40px;
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: flex;
+            gap: 20px;
+        }
+
+        .word {
+            display: inline-block;
+            color: rgb(32, 44, 44);
+            text-shadow: 0 0 5px rgb(127, 130, 130),
+                0 0 10px rgb(154, 154, 154),
+                0 0 20px rgb(178, 178, 178),
+                0 0 40px rgb(149, 149, 149);
+            animation-duration: 1.2s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+        }
+
+        .bounce1 {
+            animation-name: bounce1;
+        }
+
+        .bounce2 {
+            animation-name: bounce2;
+            animation-delay: 0.3s;
+        }
+
+        .bounce3 {
+            animation-name: bounce3;
+            animation-delay: 0.6s;
+        }
+
+        @keyframes bounce1 {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px) scale(1.1);
+            }
+        }
+
+        @keyframes bounce2 {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px) scale(1.1);
+            }
+        }
+
+        @keyframes bounce3 {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px) scale(1.1);
+            }
+        }
+
+        @keyframes mcFloat {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-14px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="title">
+            <span class="word bounce1">COLOR</span>
+            <span class="word bounce2">SCHEME</span>
+            <span class="word bounce3">SWITCHER</span>
+        </div>
+
+
+        <div class="box-container">
+            <div class="box red">
+                <div class="inner"></div>
+            </div>
+            <div class="box green">
+                <div class="inner"></div>
+            </div>
+            <div class="box yellow">
+                <div class="inner"></div>
+            </div>
+            <div class="box blue">
+                <div class="inner"></div>
+            </div>
+        </div>
+
+        <div class="about">
+            <span class="emoticon">ㄟ( ▔, ▔ )ㄏ</span> Click any box to change the background color of this page...
+        </div>
+    </div>
+
+    <script>
+        const boxContainer = document.querySelector('.box-container'); 
+        const body = document.body;
+
+        boxContainer.addEventListener("click", (e) => {
+            const box = e.target.closest('.box'); 
+
+            if (!box) return; 
+
+            if (box.classList.contains('red')) {
+                body.style.backgroundColor = '#ff6347';
+            } else if (box.classList.contains('green')) {
+                body.style.backgroundColor = '#90ee90';
+            } else if (box.classList.contains('yellow')) {
+                body.style.backgroundColor = '#f5deb3';
+            } else if (box.classList.contains('blue')) {
+                body.style.backgroundColor = '#87ceeb';
+            }
+        });
+    </script>
+
+</body>
+
+</html>
