@@ -118,3 +118,7 @@ Bike.prototype.numPlate;
 bike1.numPlate = "BC-100";
 console.log(bike1.numPlate);
 
+Object.preventExtensions(bike1);
+
+bike1.crud = 34;
+console.log(bike1.crud);

@@ -1,7 +1,7 @@
 class User {
     constructor(email, password){
-        this.email = email;
-        this.password = password
+        this.email = email;     // this.email calls the setter
+        this.password = password;
     }
 
     get email(){
@@ -21,4 +21,5 @@ class User {
 }
 
 const hitesh = new User("h@hitesh.ai", "abc")
-console.log(hitesh.email);
+console.log(hitesh.email);   // calls the getter
+console.log(hitesh);
