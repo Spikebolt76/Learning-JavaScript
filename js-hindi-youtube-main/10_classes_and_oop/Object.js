@@ -40,3 +40,14 @@ The constructor is called: The constructor function is called with the specified
 The new object is returned: After the constructor function has been called, if it doesn't return a non-primitive value (object, array, function, etc.), the newly created object is returned.
 
 */
+
+
+//-----------------------------------------
+
+// let obj = {
+//     p1: 23,
+//     p2: 34,
+//     p1: 0
+// }
+// console.log(obj);
+// JavaScript object literals do not allow duplicate keys—if a key is repeated, only the last occurrence is kept.

@@ -1,1 +1,0 @@
-console.log(u1.name);
