@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Data Table</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .empty-state {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 40px;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #999;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>User Data</h1>
+        
+        <table id="userTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="userTableBody">
+                <tr>
+                    <td colspan="4" class="empty-state">No user data available. Data will be loaded via API.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <template id="userDataTemplate">
+            <tr>
+                <td class="id"></td>
+                <td class="name"></td>
+                <td class="email"></td>
+                <td class="status"></td>
+            </tr>
+        </template>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function renderUserData () {
+            const xhttp = new XMLHttpRequest();
+            xhttp.open('GET', "https://retoolapi.dev/hXZ41A/UserData_01");
+            xhttp.send();
+            xhttp.onload = function () {
+                const data = JSON.parse(this.responseText);
+                console.log(data);
+
+                const tbody = document.getElementById('userTableBody');
+                const template = document.getElementById('userDataTemplate');
+
+                const fragment = new DocumentFragment();
+                tbody.innerHTML = ''; 
+
+                data.forEach(element => {
+                    const clone = template.content.cloneNode(true);
+                    const tr = clone.querySelector("tr");
+
+                    tr.querySelector('.id').textContent = element.id;
+                    tr.querySelector('.name').textContent = element.Name;
+                    tr.querySelector('.email').textContent = element.EmailID;
+                    tr.querySelector('.status').textContent = element.Active;
+
+                    fragment.appendChild(clone);
+                });
+
+                tbody.appendChild(fragment);
+            }
+        });
+
+    </script>
+</body>
+</html>
