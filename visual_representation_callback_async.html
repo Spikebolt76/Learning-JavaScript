@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Call Stack Visualization</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1a1a1a;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 30px;
+        }
+        
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .step {
+            border: 2px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            background: #2a2a2a;
+            transition: all 0.3s ease;
+        }
+        
+        .step:hover {
+            border-color: #4CAF50;
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+        }
+        
+        .step-header {
+            font-size: 18px;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+        }
+        
+        .callstack {
+            background: #1e1e1e;
+            border: 1px solid #444;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        
+        .callstack-title {
+            color: #FFA726;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .stack-frame {
+            background: #333;
+            margin: 5px 0;
+            padding: 8px 12px;
+            border-left: 4px solid #4CAF50;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+        
+        .stack-frame.bottom {
+            border-left-color: #2196F3;
+        }
+        
+        .web-apis {
+            background: #1a237e;
+            border: 1px solid #3f51b5;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        
+        .web-apis-title {
+            color: #3f51b5;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .timer {
+            background: #283593;
+            padding: 8px 12px;
+            border-radius: 3px;
+            color: #fff;
+        }
+        
+        .callback-queue {
+            background: #4a148c;
+            border: 1px solid #7b1fa2;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        
+        .callback-queue-title {
+            color: #7b1fa2;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .queued-callback {
+            background: #6a1b9a;
+            padding: 8px 12px;
+            border-radius: 3px;
+            color: #fff;
+        }
+        
+        .description {
+            color: #ccc;
+            font-style: italic;
+            margin-top: 15px;
+            line-height: 1.5;
+        }
+        
+        .empty {
+            color: #666;
+            font-style: italic;
+            text-align: center;
+            padding: 10px;
+        }
+        
+        .highlight {
+            background: #4CAF50;
+            color: #000;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 JavaScript Call Stack Visualization</h1>
+        
+        <div class="timeline">
+            <!-- Step 1 -->
+            <div class="step">
+                <div class="step-header">Step 1: Initial Function Call</div>
+                
+                <div class="callstack">
+                    <div class="callstack-title">📚 Call Stack:</div>
+                    <div class="stack-frame">findUser('john', console.log)</div>
+                    <div class="stack-frame bottom">Global Execution Context</div>
+                </div>
+                
+                <div class="web-apis">
+                    <div class="web-apis-title">🌐 Web APIs:</div>
+                    <div class="empty">Empty</div>
+                </div>
+                
+                <div class="callback-queue">
+                    <div class="callback-queue-title">⏳ Callback Queue:</div>
+                    <div class="empty">Empty</div>
+                </div>
+                
+                <div class="description">
+                    <span class="highlight">findUser</span> is called with 'john' and console.log as arguments. The function is pushed onto the call stack.
+                </div>
+            </div>
+            
+            <!-- Step 2 -->
+            <div class="step">
+                <div class="step-header">Step 2: getUsers Called</div>
+                
+                <div class="callstack">
+                    <div class="callstack-title">📚 Call Stack:</div>
+                    <div class="stack-frame">getUsers(callback)</div>
+                    <div class="stack-frame">findUser('john', console.log)</div>
+                    <div class="stack-frame bottom">Global Execution Context</div>
+                </div>
+                
+                <div class="web-apis">
+                    <div class="web-apis-title">🌐 Web APIs:</div>
+                    <div class="empty">Empty</div>
+                </div>
+                
+                <div class="callback-queue">
+                    <div class="callback-queue-title">⏳ Callback Queue:</div>
+                    <div class="empty">Empty</div>
+                </div>
+                
+                <div class="description">
+                    Inside <span class="highlight">findUser</span>, <span class="highlight">getUsers</span> is called with an anonymous callback function. getUsers is pushed onto the call stack.
+                </div>
+            </div>
+            
+            <!-- Step 3 -->
+            <div class="step">
+                <div class="step-header">Step 3: setTimeout Called</div>
+                
+                <div class="callstack">
+                    <div class="callstack-title">📚 Call Stack:</div>
+                    <div class="stack-frame">setTimeout(callback, 1000)</div>
+                    <div class="stack-frame">getUsers(callback)</div>
+                    <div class="stack-frame">findUser('john', console.log)</div>
+                    <div class="stack-frame bottom">Global Execution Context</div>
+                </div>
+                
+                <div class="web-apis">
+                    <div class="web-apis-title">🌐 Web APIs:</div>
+                    <div class="empty">Timer starting...</div>
+                </div>
+                
+                <div class="callback-queue">
+                    <div class="callback-queue-title">⏳ Callback Queue:</div>
+                    <div class="empty">Empty</div>
+                </div>
+                
+                <div class="description">
+                    <span class="highlight">setTimeout</span> is called inside getUsers. The timer is set up in the Web APIs environment.
+                </div>
+            </div>
+            
+            <!-- Step 4 -->
+            <div class="step">
+                <div class="step-header">Step 4: Timer Set, Functions Return</div>
+                
+                <div class="callstack">
+                    <div class="callstack-title">📚 Call Stack:</div>
+                    <div class="stack-frame bottom">Global Execution Context</div>
+                </div>
+                
+                <div class="web-apis">
+                    <div class="web-apis-title">🌐 Web APIs:</div>
+                    <div class="timer">⏰ Timer: 1000ms countdown<br/>Callback: () => { callback([users...]) }</div>
+                </div>
+                
+                <div class="callback-queue">
+                    <div class="callback-queue-title">⏳ Callback Queue:</div>
+                    <div class="empty">Empty</div>
+                </div>
+                
+                <div class="description">
+                    <span class="highlight">setTimeout</span> returns immediately, so all functions pop off the call stack. The timer runs in the background in Web APIs. The main thread is now free!
+                </div>
+            </div>
+            
+            <!-- Step 5 -->
+            <div class="step">
+                <div class="step-header">Step 5: Timer Completes (after 1000ms)</div>
+                
+                <div class="callstack">
+                    <div class="callstack-title">📚 Call Stack:</div>
+                    <div class="stack-frame bottom">Global Execution Context</div>
+                </div>
+                
+                <div class="web-apis">
+                    <div class="web-apis-title">🌐 Web APIs:</div>
+                    <div class="empty">Empty</div>
+                </div>
+                
+                <div class="callback-queue">
+                    <div class="callback-queue-title">⏳ Callback Queue:</div>
+                    <div class="queued-callback">() => { callback([{username:'john'...}, {username:'jane'...}]) }</div>
+                </div>
+                
+                <div class="description">
+                    After 1 second, the timer completes and the callback is moved from Web APIs to the <span class="highlight">Callback Queue</span>. The event loop will move it to the call stack when the stack is empty.
+                </div>
+            </div>
+            
+            <!-- Step 6 -->
+            <div class="step">
+                <div class="step-header">Step 6: Callback Executed</div>
+                
+                <div class="callstack">
+                    <div class="callstack-title">📚 Call Stack:</div>
+                    <div class="stack-frame">() => { callback([users...]) }</div>
+                    <div class="stack-frame bottom">Global Execution Context</div>
+                </div>
+                
+                <div class="web-apis">
+                    <div class="web-apis-title">🌐 Web APIs:</div>
+                    <div class="empty">Empty</div>
+                </div>
+                
+                <div class="callback-queue">
+                    <div class="callback-queue-title">⏳ Callback Queue:</div>
+                    <div class="empty">Empty</div>
+                </div>
+                
+                <div class="description">
+                    The callback is moved from the queue to the call stack and executes. It calls the callback function that was passed from <span class="highlight">findUser</span> with the users array.
+                </div>
+            </div>
+            
+            <!-- Step 7 -->
+            <div class="step">
+                <div class="step-header">Step 7: Find User and Log Result</div>
+                
+                <div class="callstack">
+                    <div class="callstack-title">📚 Call Stack:</div>
+                    <div class="stack-frame">console.log({username: 'john', email: 'john@test.com'})</div>
+                    <div class="stack-frame">(users) => { const user = users.find(...); callback(user); }</div>
+                    <div class="stack-frame">() => { callback([users...]) }</div>
+                    <div class="stack-frame bottom">Global Execution Context</div>
+                </div>
+                
+                <div class="web-apis">
+                    <div class="web-apis-title">🌐 Web APIs:</div>
+                    <div class="empty">Empty</div>
+                </div>
+                
+                <div class="callback-queue">
+                    <div class="callback-queue-title">⏳ Callback Queue:</div>
+                    <div class="empty">Empty</div>
+                </div>
+                
+                <div class="description">
+                    The anonymous function from <span class="highlight">findUser</span> executes, finds the user 'john' in the array, and calls <span class="highlight">console.log</span> with the found user object. The result is printed to the console!
+                </div>
+            </div>
+            
+            <!-- Step 8 -->
+            <div class="step">
+                <div class="step-header">Step 8: Execution Complete</div>
+                
+                <div class="callstack">
+                    <div class="callstack-title">📚 Call Stack:</div>
+                    <div class="stack-frame bottom">Global Execution Context</div>
+                </div>
+                
+                <div class="web-apis">
+                    <div class="web-apis-title">🌐 Web APIs:</div>
+                    <div class="empty">Empty</div>
+                </div>
+                
+                <div class="callback-queue">
+                    <div class="callback-queue-title">⏳ Callback Queue:</div>
+                    <div class="empty">Empty</div>
+                </div>
+                
+                <div class="description">
+                    All functions have completed execution and been removed from the call stack. The program has finished, and the console shows: <span class="highlight">{ username: 'john', email: 'john@test.com' }</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

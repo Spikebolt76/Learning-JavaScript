@@ -86,39 +86,43 @@
 
 //------------------------------------------------
 
-class Car {
-  constructor (brand) {
-    this.brand = brand;
-  }
+// class Car {
+//   constructor (brand) {
+//     this.brand = brand;
+//   }
 
-   printBrand () {
-    console.log(this.brand);
-  }
-}
+//    printBrand () {
+//     console.log(this.brand);
+//   }
+// }
 
-let car1 = new Car("BMW");
-car1.printBrand();
+// let car1 = new Car("BMW");
+// car1.printBrand();
 
-//--------------------------------------------
+// //--------------------------------------------
 
-function Bike (company) {
-  this.company = company;
-}
+// function Bike (company) {
+//   this.company = company;
+// }
 
-let bike1 = new Bike("honda");
+// let bike1 = new Bike("honda");
 
-Bike.prototype.printCompany = function () {
-  console.log(this.company);
-}
+// Bike.prototype.printCompany = function () {
+//   console.log(this.company);
+// }
 
-bike1.printCompany();
+// bike1.printCompany();
 
-Bike.prototype.numPlate;
+// Bike.prototype.numPlate;
 
-bike1.numPlate = "BC-100";
-console.log(bike1.numPlate);
+// bike1.numPlate = "BC-100";
+// console.log(bike1.numPlate);
 
-Object.preventExtensions(bike1);
+// Object.preventExtensions(bike1);
 
-bike1.crud = 34;
-console.log(bike1.crud);
+// bike1.crud = 34;
+// console.log(bike1.crud);
+
+//---------------------------------------------------------
+
+console.log({} + [])
