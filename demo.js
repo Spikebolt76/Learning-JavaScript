@@ -125,4 +125,12 @@
 
 //---------------------------------------------------------
 
-console.log({} + [])
+const p = new Promise((resolve, reject) => {
+  console.log("Executor is running");
+
+  console.log("Resolve:", resolve);
+  console.log("Reject:", reject);
+
+  resolve("BOOM");
+});
+
