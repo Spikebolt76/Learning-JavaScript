@@ -125,12 +125,29 @@
 
 //---------------------------------------------------------
 
-const p = new Promise((resolve, reject) => {
-  console.log("Executor is running");
+// const p = new Promise((resolve, reject) => {
+//   console.log("Executor is running");
 
-  console.log("Resolve:", resolve);
-  console.log("Reject:", reject);
+//   console.log("Resolve:", resolve);
+//   console.log("Reject:", reject);
 
-  resolve("BOOM");
-});
+//   resolve("BOOM");
+// });
 
+//-------------------------------------------------------------
+
+function getUsers(callback) {
+  setTimeout(callback, 1000, [
+      { username: 'john', email: 'john@test.com' },
+      { username: 'jane', email: 'jane@test.com' },
+    ]);
+}
+
+function findUser(username, callback) {
+  getUsers((users) => {
+    const user = users.find((user) => user.username === username);
+    callback(user);
+  });
+}
+
+findUser('john', console.log);
